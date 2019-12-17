@@ -3,7 +3,9 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 import json
 
-def train():
+
+@api_view(['POST'])
+def train(request):
     return HttpResponse("Invoked Train")
 
 rpc_mapper = {
@@ -16,5 +18,3 @@ def rpc_request_handler(request):
     print(request.data["method"])
     method = request.data["method"]
     return rpc_mapper[method]()
-
-    
