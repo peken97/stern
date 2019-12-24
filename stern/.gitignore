@@ -1,0 +1,5 @@
+db.sqlite3
+**/__pycache__
+.vscode
+api/__pycache__
+**/stern/__pycache__

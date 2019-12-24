@@ -18,26 +18,27 @@ def train(request):
     y = request.data['y']
     z = request.data['z']
     steps = request.data['steps']
+    numberOfBlocks = request.data['numberOfBlocks']
     
-    trainingThread = threading.Thread(target=runTrainingSession, args=())
+    trainingThread = threading.Thread(target=runTrainingSession, args=(steps, x, y, z, numberOfBlocks))
     trainingThread.start()
-    #runTrainingSession(x, y, z, steps)
     return HttpResponse("Damn")
 
 def runTrainingSession(steps=0, x=0, y=0, z=0, numberOfBlocks=0):
     print("Started Thread")
-    env = DummyVecEnv([lambda: environments.LegoEnv(6, 14, 6, 12)])
+    env = DummyVecEnv([lambda: environments.LegoEnv(x, y, z, numberOfBlocks+2)])
 
     model = PPO2(MlpPolicy, env, verbose=1)
     obs = env.reset()
     model.set_env(env)
-    model.learn(total_timesteps=2000)
+    model.learn(total_timesteps=steps)
     obs = env.reset()
     
     info = None
-    for i in range(4):
+    for i in range(numberOfBlocks):
         action, _states = model.predict(obs)
         obs, rewards, done, info = env.step(action)
-        env.render()    
+
+    print(info[0]['content'])
     return info[0]['content']
 
