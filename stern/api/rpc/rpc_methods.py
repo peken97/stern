@@ -26,7 +26,7 @@ def train(request):
 
 def runTrainingSession(steps=0, x=0, y=0, z=0, numberOfBlocks=0):
     print("Started Thread")
-    env = DummyVecEnv([lambda: environments.LegoEnv(x, y, z, numberOfBlocks+2)])
+    env = environments.LegoEnv(x, y, z, numberOfBlocks+2)
 
     model = PPO2(MlpPolicy, env, verbose=1)
     obs = env.reset()
@@ -39,6 +39,6 @@ def runTrainingSession(steps=0, x=0, y=0, z=0, numberOfBlocks=0):
         action, _states = model.predict(obs)
         obs, rewards, done, info = env.step(action)
 
-    print(info[0]['content'])
-    return info[0]['content']
+    print(info['content'])
+    return info['content']
 
