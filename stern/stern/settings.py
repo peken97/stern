@@ -25,7 +25,7 @@ SECRET_KEY = '2co3!ei5lqu)433^dplw3(n64lva1%idvolm+j)r6*nq-dj%#c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['http://ec2-3-136-157-187.us-east-2.compute.amazonaws.com', '127.0.0.1']
 
 """
 REST_FRAMEWORK = {
